@@ -40,10 +40,10 @@ public class CountryService {
         countryEntity.setCountryCode(countryCode);
 
         return Country.countryFromEntity(countryRepository.save(countryEntity));
-
     }
 
     public Country addCountry(@Nonnull String countryName, @Nonnull String countryCode) {
+
         return Country.countryFromEntity(
                 countryRepository.save(
                         Country.fromJson(new Country(countryName, countryCode))));

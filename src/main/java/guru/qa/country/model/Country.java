@@ -10,7 +10,6 @@ public record Country(@JsonProperty("country_name")
 ) {
 
     public static Country countryFromEntity(CountryEntity ce) {
-
         return new Country(
                 ce.getCountryName(),
                 ce.getCountryCode()

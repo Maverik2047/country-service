@@ -8,5 +8,4 @@ public interface CountryRepository extends JpaRepository<CountryEntity, UUID> {
 
     CountryEntity findByCountryCode(String countryCode);
 
-
 }
