@@ -40,12 +40,9 @@ class CountryApplicationTests {
     @Test
     void addCountryTest() {
 
-        String countryName = faker.country().name();
-        String countryCode = faker.country().countryCode2();
+        Country country = new Country(faker.country().name(), faker.country().countryCode2());
 
-        Country country = new Country(countryName, countryCode);
-
-        Country response = RestAssured.given()
+        Country response = given()
                 .body(country)
                 .contentType(JSON)
                 .when()
@@ -58,7 +55,43 @@ class CountryApplicationTests {
 
         assertAll(
                 "Check Name and Code",
-                () -> assertEquals(countryName, response.countryName()),
-                () -> assertEquals(countryCode, response.countryCode()));
+                () -> assertEquals(country.countryName(), response.countryName()),
+                () -> assertEquals(country.countryCode(), response.countryCode()));
+    }
+
+    @Test
+    void addCountryWithoutParamsTest() {
+
+        Country country = new Country(null, null);
+
+        given()
+                .body(country)
+                .contentType(JSON)
+                .when()
+                .post("/addCountry")
+                .then()
+                .log().all()
+                .statusCode(500)
+                .extract()
+                .response().as(Country.class);
+    }
+
+    @Test
+    void editCountryTest() {
+
+        Country country = new Country(faker.country().name(), "ki");
+
+        Country response = given()
+                .body(country)
+                .contentType(JSON)
+                .when()
+                .patch("/editCountryName")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .extract()
+                .response().as(Country.class);
+
+        assertEquals(country.countryName(), response.countryName());
     }
 }

@@ -26,7 +26,6 @@ public class CountryService {
                 .stream()
                 .map(Country::countryFromEntity)
                 .collect(Collectors.toList());
-        //return List.of(new Country("URG","URRR",new Date()));
     }
 
     public Country saveCountry(@Nonnull Country country) {
@@ -47,5 +46,13 @@ public class CountryService {
         return Country.countryFromEntity(
                 countryRepository.save(
                         Country.fromJson(new Country(countryName, countryCode))));
+    }
+
+    public Country editCountryName(@Nonnull Country country) {
+
+        CountryEntity countryEntity = countryRepository.findByCountryCode(country.countryCode());
+
+        countryEntity.setCountryName(country.countryName());
+        return Country.countryFromEntity(countryRepository.save(countryEntity));
     }
 }

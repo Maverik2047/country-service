@@ -15,11 +15,11 @@ public class CountryController {
 
     @Autowired
     public CountryController(CountryService countryService) {
-
         this.countryService = countryService;
     }
 
     @GetMapping("/countries")
+    @ResponseStatus(HttpStatus.FOUND)
     public List<Country> getAll() {
         return countryService.getAllCountries();
     }
@@ -28,5 +28,11 @@ public class CountryController {
     @ResponseStatus(HttpStatus.CREATED)
     public Country addCountry(@RequestBody Country country) {
         return countryService.saveCountry(country);
+    }
+
+    @PatchMapping("/editCountryName")
+    @ResponseStatus(HttpStatus.OK)
+    public Country editCountry(@RequestBody Country country) {
+        return countryService.editCountryName(country);
     }
 }
