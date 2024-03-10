@@ -16,7 +16,7 @@ public record Country(@JsonProperty("country_name")
         );
     }
 
-    public static CountryEntity fromJson(Country country) {
+    public CountryEntity toEntity(Country country) {
 
         CountryEntity countryEntity = new CountryEntity();
         countryEntity.setCountryCode(country.countryCode);

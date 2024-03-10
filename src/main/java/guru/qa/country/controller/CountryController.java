@@ -19,9 +19,15 @@ public class CountryController {
     }
 
     @GetMapping("/countries")
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     public List<Country> getAll() {
         return countryService.getAllCountries();
+    }
+
+    @GetMapping("/countryInfo")
+    @ResponseStatus(HttpStatus.OK)
+    public Country getCountryByCode(@RequestParam String countryCode) {
+        return countryService.getCountryByCode(countryCode);
     }
 
     @PostMapping("/addCountry")

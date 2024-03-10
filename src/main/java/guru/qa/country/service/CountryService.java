@@ -41,18 +41,19 @@ public class CountryService {
         return Country.countryFromEntity(countryRepository.save(countryEntity));
     }
 
-    public Country addCountry(@Nonnull String countryName, @Nonnull String countryCode) {
-
-        return Country.countryFromEntity(
-                countryRepository.save(
-                        Country.fromJson(new Country(countryName, countryCode))));
-    }
-
     public Country editCountryName(@Nonnull Country country) {
 
         CountryEntity countryEntity = countryRepository.findByCountryCode(country.countryCode());
 
         countryEntity.setCountryName(country.countryName());
+
         return Country.countryFromEntity(countryRepository.save(countryEntity));
+    }
+
+    public Country getCountryByCode(@Nonnull String countryCode) {
+
+        CountryEntity countryEntity = countryRepository.findByCountryCode(countryCode);
+
+        return Country.countryFromEntity(countryEntity);
     }
 }
